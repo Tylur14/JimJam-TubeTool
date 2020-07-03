@@ -1,0 +1,58 @@
+
+def get_YTimageURL(incUrl):
+    yt = YouTube(incUrl)
+    pull_image(yt.thumbnail_url,"thumbnail")
+
+def pull_image(url,videoName):
+    if not videoName.__contains__(".png"):
+        videoName+=".png"
+    image=urllib.request.URLopener()
+    image.retrieve(url,videoName)
+    i = ImageTk.PhotoImage(Image.open("thumbnail.png").resize((640,360),Image.ANTIALIAS))
+    panel.configure(image = i)
+    panel.image = i
+
+
+
+window.geometry("800x500")
+
+
+linkInput = tk.Entry(
+    width=60,
+    )
+nameInput = tk.Entry(width=60)
+
+downloadVideo = tk.Button(
+    text="Download Video",
+    width=20,
+    height=2,
+    command=lambda: get_YTimageURL(linkInput.get()) 
+    )
+
+downloadAudio = tk.Button(
+    text="Download Audio",
+    width=20,
+    height=2,
+    command=lambda: get_YTimageURL(linkInput.get()) 
+    )
+
+img = ImageTk.PhotoImage(Image.open("placeholder.png").resize((640,360),Image.ANTIALIAS))
+panel = tk.Label(window, image = img)
+
+linkInput.grid(row=1, column=0)
+downloadVideo.grid(row=0, column=0)
+downloadAudio.grid(row=0, column=1)
+nameInput.grid(row=1, column=1)
+
+def callback(sv):
+    i = int(l.cget("text"))
+    i+=1
+    l.configure(text=i)
+
+
+#sv = tk.StringVar()
+#sv.trace("w", lambda name, index, mode, sv=sv: callback(sv))
+#e = tk.Entry(window, textvariable=sv)
+#l = tk.Label(text="0")
+#e.pack()
+#l.pack()
