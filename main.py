@@ -83,6 +83,20 @@ def get_video(url = link):
     except: 
         print("Error: unable to complete video download")
 
+def get_audio(url = link):
+    try: 
+        #object creation using YouTube which was imported in the beginning 
+        yt = pytube.YouTube(linkInput.get()) 
+    except: 
+        print("Connection error or invalid video!") #to handle exception 
+  
+    #get the video with the extension and resolution passed in the get() function
+    audio = yt.streams.get_audio_only() 
+    try: 
+        #downloading the video
+        audio.download(SAVE_PATH,nameInput.get())
+    except: 
+        print("Error: unable to complete video download")
 
 window = tk.Tk()
 window.title('TubeTool')
@@ -125,7 +139,7 @@ downloadAudio = tk.Button(footerFrame,
     text="Download Audio",
     width=20,
     height=2,
-    command=lambda: get_video(linkInput.get()) 
+    command=lambda: get_audio(linkInput.get()) 
     )
 
 statusLabel = tk.Label(headerFrame,
